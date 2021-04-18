@@ -21,3 +21,13 @@ pub fn get_configuration() -> Result<Settings, config::ConfigError> {
 
     settings.try_into()
 }
+
+impl DatabaseSettings {
+    pub fn connecting_str(&self) -> String {
+        // DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}
+        format!(
+            "postgres://{}:{}@localhost:{}/{}",
+            self.username, self.password, self.port, self.database_name
+        )
+    }
+}
